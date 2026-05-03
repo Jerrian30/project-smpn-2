@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ujian Informatika</title>
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: #333;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 30px auto;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 0.8s ease-in-out;
+      }
+
+      h2 {
+        text-align: center;
+        color: #4a00e0;
+        margin-bottom: 10px;
+      }
+
+      #nama {
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #555;
+      }
+
+      p {
+        font-weight: bold;
+        margin-top: 15px;
+      }
+
+      /* opsi jawaban */
+      input[type="radio"] {
+        display: none;
+      }
+
+      label {
+        display: block;
+        background: #f1f3ff;
+        padding: 10px 15px;
+        margin: 5px 0;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+        border: 2px solid transparent;
+      }
+
+      label:hover {
+        background: #dfe4ff;
+        transform: scale(1.02);
+      }
+
+      input[type="radio"]:checked + label {
+        background: #6c63ff;
+        color: white;
+        border: 2px solid #4a00e0;
+      }
+
+      /* tombol */
+      button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin-top: 25px;
+        font-size: 18px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #ff7eb3, #ff758c);
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        transform: scale(1.05);
+        background: linear-gradient(135deg, #ff4e8b, #ff2e63);
+      }
+
+      /* hasil */
+      .result {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        background: #e3f2fd;
+        font-size: 18px;
+        animation: fadeIn 0.5s ease;
+      }
+
+      /* animasi */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Ujian Informatika</h2>
+      <p id="nama"></p>
+
+      <form id="quizForm"></form>
+
+      <button onclick="submitQuiz()">Submit Jawaban</button>
+
+      <div class="result" id="result"></div>
+    </div>
+
+    <script>
+      // Input nama
+      let nama = prompt("Masukkan nama kamu:");
+      document.getElementById("nama").innerText = "Nama: " + nama;
+
+      // Soal & Jawaban
+      const questions = [
+        [
+          "Menu yang digunakan untuk menyimpan dokumen adalah...",
+          ["A.Home", "B.Insert", "C.File", "D.Layout"],
+          "C",
+        ],
+        [
+          "Ikon B (Bold) berfungsi untuk...",
+          ["A.Miring", "B.Tebal", "C.Warna", "D.Hapus"],
+          "B",
+        ],
+        [
+          "Menu untuk menambahkan gambar adalah...",
+          ["A.Home", "B.Insert", "C.File", "D.Review"],
+          "B",
+        ],
+        [
+          "Untuk mengubah jenis huruf digunakan fitur...",
+          ["A.Font", "B.Paragraph", "C.Layout", "D.Design"],
+          "A",
+        ],
+        [
+          "Spasi antar baris diatur pada menu...",
+          ["A.Insert", "B.Layout", "C.Paragraph", "D.File"],
+          "C",
+        ],
+        [
+          "Rata tengah disebut juga...",
+          ["A.Left", "B.Right", "C.Center", "D.Justify"],
+          "C",
+        ],
+        [
+          "Perintah untuk membuat dokumen baru adalah...",
+          ["A.Open", "B.Save", "C.New", "D.Close"],
+          "C",
+        ],
+        [
+          "Untuk memasukkan tabel digunakan menu...",
+          ["A.File", "B.Insert", "C.Layout", "D.Review"],
+          "B",
+        ],
+        [
+          "Gambar dimasukkan melalui...",
+          ["A.Home", "B.Insert", "C.Design", "D.Format"],
+          "B",
+        ],
+        [
+          "Shape terdapat pada menu...",
+          ["A.Insert", "B.Home", "C.File", "D.Review"],
+          "A",
+        ],
+        [
+          "Ukuran kertas diatur pada menu...",
+          ["A.Layout", "B.Insert", "C.Home", "D.File"],
+          "A",
+        ],
+        [
+          "Format file Word adalah...",
+          ["A.xls", "B.ppt", "C.docx", "D.jpg"],
+          "C",
+        ],
+
+        [
+          "Pertemuan baris dan kolom disebut...",
+          ["A.Sheet", "B.Cell", "C.Workbook", "D.Table"],
+          "B",
+        ],
+        [
+          "File Excel disebut...",
+          ["A.Sheet", "B.Cell", "C.Workbook", "D.Column"],
+          "C",
+        ],
+        ["Contoh alamat cell adalah...", ["A.1A", "B.AA", "C.A1", "D.11"], "C"],
+        [
+          "Rumus Excel harus diawali dengan...",
+          ["A.+", "B.=", "C.-", "D.*"],
+          "B",
+        ],
+        [
+          "Fungsi untuk menjumlahkan adalah...",
+          ["A.AVG", "B.SUM", "C.MAX", "D.MIN"],
+          "B",
+        ],
+        [
+          "Fungsi rata-rata adalah...",
+          ["A.SUM", "B.MAX", "C.AVERAGE", "D.COUNT"],
+          "C",
+        ],
+        [
+          "Fungsi nilai terbesar adalah...",
+          ["A.MIN", "B.MAX", "C.SUM", "D.AVG"],
+          "B",
+        ],
+        [
+          "Shortcut copy adalah...",
+          ["A.Ctrl+V", "B.Ctrl+X", "C.Ctrl+C", "D.Ctrl+Z"],
+          "C",
+        ],
+        [
+          "Shortcut paste adalah...",
+          ["A.Ctrl+V", "B.Ctrl+C", "C.Ctrl+X", "D.Ctrl+S"],
+          "A",
+        ],
+        [
+          "Shortcut undo adalah...",
+          ["A.Ctrl+S", "B.Ctrl+Z", "C.Ctrl+A", "D.Ctrl+P"],
+          "B",
+        ],
+        [
+          "Shortcut untuk menyimpan adalah...",
+          ["A.Ctrl+V", "B.Ctrl+C", "C.Ctrl+S", "D.Ctrl+Z"],
+          "C",
+        ],
+
+        [
+          "Tempat menampilkan hasil program disebut...",
+          ["A.Script", "B.Stage", "C.Sprite", "D.Block"],
+          "B",
+        ],
+        [
+          "Objek dalam Scratch disebut...",
+          ["A.Stage", "B.Sprite", "C.Block", "D.Code"],
+          "B",
+        ],
+        [
+          "Tempat menyusun kode adalah...",
+          ["A.Stage", "B.Sprite", "C.Script Area", "D.Menu"],
+          "C",
+        ],
+        [
+          "Blok untuk menggerakkan objek adalah...",
+          ["A.Looks", "B.Motion", "C.Sound", "D.Event"],
+          "B",
+        ],
+        [
+          "Blok untuk pengulangan adalah...",
+          ["A.Motion", "B.Looks", "C.Control", "D.Sound"],
+          "C",
+        ],
+        [
+          "Blok untuk suara adalah...",
+          ["A.Motion", "B.Sound", "C.Event", "D.Control"],
+          "B",
+        ],
+        [
+          "“When green flag clicked” termasuk...",
+          ["A.Motion", "B.Control", "C.Event", "D.Sound"],
+          "C",
+        ],
+        [
+          "Seorang siswa ingin mengubah tampilan karakter (sprite) agar terlihat berjalan dengan mengganti gambar secara berurutan. Kegiatan tersebut termasuk penggunaan blok...",
+          ["A.Motion", "B.Looks", "C.Control", "D.Event"],
+          "B",
+        ],
+        [
+          "Dalam Scratch, jika kita ingin membuat program yang berjalan ketika sprite diklik oleh mouse, maka kita menggunakan blok...",
+          ["A.Event", "B.Motion", "C.Sound", "D.Looks"],
+          "A",
+        ],
+        [
+          "Seorang siswa membuat animasi di Scratch dengan cara Mengganti kostum sprite, Mengulang gerakan beberapa kali dan Menambahkan efek gerak. Tujuan dari langkah tersebut adalah untuk...",
+          [
+            "A.Menghapus sprite",
+            "B.Mengubah warna latar",
+            "C.Membuat animasi gerakan",
+            "D.Menghentikan program",
+          ],
+          "C",
+        ],
+
+        [
+          "Dampak positif teknologi adalah...",
+          ["A.Hoaks", "B.Bullying", "C.Komunikasi", "D.Penipuan"],
+          "C",
+        ],
+        [
+          "Contoh dampak negatif adalah...",
+          ["A.Belajar", "B.Cepat", "C.Bullying", "D.Info"],
+          "C",
+        ],
+        [
+          "Hoaks adalah...",
+          ["A Informasi.Benar", "B.informasi Palsu", "C.data Resmi", "D.Fakta"],
+          "B",
+        ],
+        [
+          "Etika menggunakan internet adalah...",
+          [
+            "A.Menyebar hoaks",
+            "B.Menghina orang",
+            "C.Menghargai orang lain",
+            "D.Menipu",
+          ],
+          "C",
+        ],
+        [
+          "Password yang aman adalah...",
+          ["A.12345", "B.nama", "C.Kombinasi huruf&angka", "D.tanggal lahir"],
+          "C",
+        ],
+        [
+          "Data pribadi yang harus dijaga adalah...",
+          ["A. Nama Kota", "B.Hobi", "C.Password", "D.Warna Favorit"],
+          "C",
+        ],
+        [
+          "Penggunaan teknologi yang bijak adalah...",
+          [
+            "A.Main terus",
+            "B.Belajar dan bermanfaat",
+            "C.Menyebar Hoaks",
+            "D.Menipu",
+          ],
+          "B",
+        ],
+      ];
+
+      // tampilkan soal
+      let form = document.getElementById("quizForm");
+
+      questions.forEach((q, i) => {
+        let html = `<p>${i + 1}. ${q[0]}</p>`;
+        q[1].forEach((opt, j) => {
+          html += `
+      <input type="radio" id="q${i}_${j}" name="q${i}" value="${opt[0]}">
+      <label for="q${i}_${j}">${opt}</label>
+    `;
+        });
+        form.innerHTML += html;
+      });
+
+      // submit
+      function submitQuiz() {
+        let score = 0;
+        let wrong = [];
+        let total = questions.length;
+
+        questions.forEach((q, i) => {
+          let ans = document.querySelector(`input[name=q${i}]:checked`);
+          if (ans) {
+            if (ans.value === q[2]) {
+              score++;
+            } else {
+              wrong.push(i + 1);
+            }
+          } else {
+            wrong.push(i + 1);
+          }
+        });
+
+        let nilai = Math.round((score / total) * 100);
+
+        let pesan = "";
+        if (nilai >= 80) {
+          pesan = `🔥 Pecah Nian ${nama}!`;
+        }
+
+        document.getElementById("result").innerHTML = `
+    Skor: ${nilai}<br>
+    Benar: ${score} / ${total}<br>
+    Salah di nomor: ${wrong.join(", ")}<br>
+    ${pesan}
+  `;
+      }
+    </script>
+  </body>
+</html>
